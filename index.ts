@@ -27,11 +27,11 @@ const port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);
 
 // Create http server
-export const server = http.createServer(app);
+export const index = http.createServer(app);
 
 // Create httpTerminator for graceful shutdown
 export const httpTerminator = createHttpTerminator({
-  server,
+  server: index,
 });
 
 // Create error handler function to make sure syscall did not fail
@@ -39,7 +39,7 @@ const errorHandler = (error: any) => {
   if (error.syscall !== 'listen') {
     throw error;
   }
-  const address = server.address();
+  const address = index.address();
   const bind =
     typeof address === 'string' ? `pipe ${address}` : `port: ${port}`;
   switch (error.code) {
@@ -55,14 +55,14 @@ const errorHandler = (error: any) => {
 };
 
 // Set server error handler function
-server.on('error', errorHandler);
+index.on('error', errorHandler);
 
 // Set lambda function while starting to listen
-server.on('listening', () => {
-  const address = server.address();
+index.on('listening', () => {
+  const address = index.address();
   const bind = typeof address === 'string' ? `pipe ${address}` : `port ${port}`;
   logger.info(`Listening on ${bind}`);
 });
 
 // Start server
-server.listen(port);
+index.listen(port);

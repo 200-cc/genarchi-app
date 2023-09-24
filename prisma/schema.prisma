@@ -1,0 +1,17 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Quote {
+  id                        Int                         @id @default(autoincrement())
+  text                      String                      @default("Ceci est la quote")
+  author                    String                      @default("Toto")
+  likes                     Int                         @default(0)
+}
