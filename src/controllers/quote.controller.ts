@@ -75,10 +75,27 @@ async function patchQuote(req: Request, res: Response, next: NextFunction) {
         );
 }
 
+async function deleteQuote(req: Request, res: Response, next: NextFunction) {
+    logger.debug(`deleteQuote: ${req.params.id}`)
+    const quotes = await QuoteService.deleteQuote(req.params.id);
+
+    // Here we use the automapper to increase the modularity of the code
+    return res
+        .status(200)
+        .json(quotes.map( (quote): QuoteDto => {
+            return new QuoteDto(
+                quote.id,
+                quote.text,
+                quote.author,
+                quote.likes
+            )})
+        );
+}
 
 export default {
     getQuote,
     getQuotes,
     postQuote,
-    patchQuote
+    patchQuote,
+    deleteQuote
 };

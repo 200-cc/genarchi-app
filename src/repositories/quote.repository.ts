@@ -115,9 +115,46 @@ async function patchQuote(id: string, text: string, author: string) {
     }
 }
 
+async function deleteQuote(id: string) {
+    logger.debug(`deleteQuote: ${id}`)
+    try {
+        await prisma.quote.delete({
+            where: { id },
+        });
+        const quotes = await prisma.quote.findMany({
+            skip: 0,
+            take: 10,
+            orderBy: {
+                likes: 'desc'
+            }
+        });
+        if (quotes == null) {
+            throw new AppError({
+                httpCode: 404,
+                description: 'Quote not found',
+            });
+        }
+        const res =  quotes.map((quote): QuoteEntity => {
+            return new QuoteEntity(
+                quote.id,
+                quote.text,
+                quote.author,
+                quote.likes
+            );});
+        return res;
+    } catch (error)
+    {
+        throw new AppError({
+            description: 'Delete quote failed',
+            httpCode: 500,
+        });
+    }
+}
+
 export default {
     getQuote,
     getQuotes,
     postQuote,
-    patchQuote
+    patchQuote,
+    deleteQuote
 };

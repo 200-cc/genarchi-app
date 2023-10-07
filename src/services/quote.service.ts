@@ -1,5 +1,4 @@
-import { AppError, HttpCode } from '../objects/exceptions/app-error.exception';
-import { logger } from '../middlewares/logger.middleware';
+import {logger} from '../middlewares/logger.middleware';
 import QuoteEntity from "../objects/entities/quote.entity";
 import QuoteRepository from "../repositories/quote.repository";
 
@@ -27,9 +26,15 @@ async function patchQuote(id: string, text: string, author: string) {
     return quote;
 }
 
+async function deleteQuote(id: string) {
+    logger.debug(`deleteQuote: ${id}`)
+    return await QuoteRepository.deleteQuote(id);
+}
+
 export default {
     getQuote,
     getQuotes,
     postQuote,
-    patchQuote
+    patchQuote,
+    deleteQuote
 };
