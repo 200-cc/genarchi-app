@@ -2,17 +2,20 @@ version: "3.7"
 name: genarchi-dev
 services:
   database:
-    image: postgres
+    image: mongo:latest
+    restart: always
     volumes:
-      - 'postgres:/var/lib/postgresql/data:rw'
-      - ./scripts/:/docker-entrypoint-initdb.d/
+      - '~/mongo/data:/data/db'
+      - './mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro'
+#      - ./scripts/:/docker-entrypoint-initdb.d/
     environment:
-      POSTGRES_DB: "${DATABASE_NAME}"
-      POSTGRES_USER: "${DATABASE_USER}"
-      POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
+      MONGO_INITDB_ROOT_USERNAME: "${DATABASE_USER}"
+      MONGO_INITDB_ROOT_PASSWORD: "${DATABASE_PASSWORD}"
+      MONGO_INITDB_DATABASE: "${DATABASE_NAME}"
+      INIT_WAIT_SEC: 3
     ports:
-      - '8208:8208'
-    command: -p 8208
+      - '27017:27017'
+#    command: -p {port}
 
 volumes:
   postgres:

@@ -53,11 +53,13 @@ NODE_ENV=development
 SESSION_SECRET="CHANGE-ME"
 
 # Database
-DATABASE_NAME="postgres"
-DATABASE_USER="admin"
-DATABASE_PASSWORD="CHANGE-ME"
-DATABASE_HOST="localhost"
-DATABASE_URL="postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:8208"
+;DATABASE_NAME="postgres"
+;DATABASE_USER="admin"
+;DATABASE_PASSWORD="CHANGE-ME"
+;DATABASE_HOST="localhost"
+;DATABASE_URL="mongodb://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:27017"
+
+DATABASE_URL="mongodb+srv://josselinmonteil:<password>@test-gen-archi.pssl499.mongodb.net/"
 ```
 
 ### **Install packages**
@@ -65,14 +67,9 @@ DATABASE_URL="postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:
 npm install
 ```
 
-### **Start database**
+### **Generate prisma client**
 ```bash
-npm run start:database
-npm run migrate
-npm run seed
-
-# To stop database
-npm run stop:database
+npx prisma generate
 ```
 
 ### **Start backend**

@@ -11,10 +11,7 @@ import QuoteService from "../services/quote.service";
 
 
 async function getQuote(req: Request, res: Response, next: NextFunction) {
-
-    const quote: QuoteEntity = await QuoteService.getQuote(Number(req.params.id));
-
-    // Here we use the automapper to increase the modularity of the code
+    const quote: QuoteEntity = await QuoteService.getQuote(req.params.id);
     return res
         .status(200)
         .json(

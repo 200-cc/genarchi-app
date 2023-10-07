@@ -4,13 +4,13 @@ generator client {
 }
 
 datasource db {
-  provider          = "postgresql"
+  provider          = "mongodb"
   url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Quote {
-  id                        Int                         @id @default(autoincrement())
+  id                        String                      @id @default(auto()) @map("_id") @db.ObjectId
   text                      String                      @default("Ceci est la quote")
   author                    String                      @default("Toto")
   likes                     Int                         @default(0)

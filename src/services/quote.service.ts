@@ -3,7 +3,7 @@ import { logger } from '../middlewares/logger.middleware';
 import QuoteEntity from "../objects/entities/quote.entity";
 import QuoteRepository from "../repositories/quote.repository";
 
-async function getQuote(id: number) {
+async function getQuote(id: string) {
     const quote: QuoteEntity = await QuoteRepository.getQuote(id);
     return quote;
 }

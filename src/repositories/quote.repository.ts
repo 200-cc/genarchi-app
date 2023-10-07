@@ -4,7 +4,7 @@ import {PrismaClient} from '@prisma/client';
 import {logger} from "../middlewares/logger.middleware";
 
 const prisma = new PrismaClient();
-async function getQuote(id: number) {
+async function getQuote(id: string) {
     try {
         const quote = await prisma.quote.findUnique({
             where: { id },
