@@ -21,8 +21,15 @@ async function postQuote(text: string, author: string) {
     return quote;
 }
 
+async function patchQuote(id: string, text: string, author: string) {
+    logger.debug(`patchQuote: ${id} ${text} ${author}`)
+    const quote: QuoteEntity = await QuoteRepository.patchQuote(id, text, author);
+    return quote;
+}
+
 export default {
     getQuote,
     getQuotes,
-    postQuote
+    postQuote,
+    patchQuote
 };

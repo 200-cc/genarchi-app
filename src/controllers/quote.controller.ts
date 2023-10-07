@@ -60,8 +60,25 @@ async function postQuote(req: Request, res: Response, next: NextFunction) {
         );
 }
 
+async function patchQuote(req: Request, res: Response, next: NextFunction) {
+    logger.debug(`patchQuote: ${req.params.id} ${req.body.text} ${req.body.author}`)
+    const quote: QuoteEntity = await QuoteService.patchQuote(req.params.id, req.body.text, req.body.author);
+    return res
+        .status(200)
+        .json(
+            new QuoteDto(
+                quote.id,
+                quote.text,
+                quote.author,
+                quote.likes
+            )
+        );
+}
+
+
 export default {
     getQuote,
     getQuotes,
-    postQuote
+    postQuote,
+    patchQuote
 };
