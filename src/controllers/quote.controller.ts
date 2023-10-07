@@ -11,6 +11,7 @@ import QuoteService from "../services/quote.service";
 
 
 async function getQuote(req: Request, res: Response, next: NextFunction) {
+    logger.debug(`getQuote: ${req.params.id}`)
     const quote: QuoteEntity = await QuoteService.getQuote(req.params.id);
     return res
         .status(200)
@@ -25,6 +26,7 @@ async function getQuote(req: Request, res: Response, next: NextFunction) {
 }
 
 async function getQuotes(req: Request, res: Response, next: NextFunction) {
+    logger.debug(`getQuotes: ${req.query.skip} ${req.query.take}`)
     const skip = Number(req.query.skip) > 0  ? Number(req.query.skip) : 0
     const take = Number(req.query.take) > 0  ? Number(req.query.take) : 10
     const quotes = await QuoteService.getQuotes(skip, take);
@@ -42,7 +44,24 @@ async function getQuotes(req: Request, res: Response, next: NextFunction) {
         );
 }
 
+
+async function postQuote(req: Request, res: Response, next: NextFunction) {
+    logger.debug(`postQuote: ${req.body.text} ${req.body.author}`)
+    const quote: QuoteEntity = await QuoteService.postQuote(req.body.text, req.body.author);
+    return res
+        .status(200)
+        .json(
+            new QuoteDto(
+                quote.id,
+                quote.text,
+                quote.author,
+                quote.likes
+            )
+        );
+}
+
 export default {
     getQuote,
-    getQuotes
+    getQuotes,
+    postQuote
 };

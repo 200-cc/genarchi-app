@@ -64,7 +64,32 @@ async function getQuotes(skip: number, take: number)
     }
 }
 
+async function postQuote(text: string, author: string) {
+    try {
+        const quote = await prisma.quote.create({
+            data: {
+                text,
+                author,
+                likes: 0
+            }
+        });
+        return new QuoteEntity(
+            quote.id,
+            quote.text,
+            quote.author,
+            quote.likes
+        );
+    } catch (error)
+    {
+        throw new AppError({
+            description: 'Post quote failed',
+            httpCode: 500,
+        });
+    }
+}
+
 export default {
     getQuote,
-    getQuotes
+    getQuotes,
+    postQuote
 };
