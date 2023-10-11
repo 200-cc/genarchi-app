@@ -1,0 +1,1 @@
+{"version":3,"file":"quote.entity.js","sourceRoot":"","sources":["../../../../src/objects/entities/quote.entity.ts"],"names":[],"mappings":";;AAAA,MAAqB,WAAW;IAM5B,YAAY,EAAU,EAAE,IAAY,EAAE,MAAc,EAAE,KAAa;QAC/D,IAAI,CAAC,EAAE,GAAG,EAAE,CAAC;QACb,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;QACrB,IAAI,CAAC,KAAK,GAAG,KAAK,CAAC;IACvB,CAAC;CACJ;AAZD,8BAYC"}
