@@ -63,10 +63,15 @@ function getQuotes(skip, take) {
             return res;
         }
         catch (error) {
-            throw new app_error_exception_1.AppError({
-                description: 'Get quotes failed',
-                httpCode: 500,
-            });
+            if (error instanceof app_error_exception_1.AppError) {
+                throw error;
+            }
+            else {
+                throw new app_error_exception_1.AppError({
+                    description: error.message,
+                    httpCode: 500,
+                });
+            }
         }
     });
 }

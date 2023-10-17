@@ -58,10 +58,15 @@ async function getQuotes(skip: number, take: number) {
         return res;
     } catch (error)
     {
-        throw new AppError({
-            description: 'Get quotes failed',
-            httpCode: 500,
-        });
+        if (error instanceof AppError) {
+            throw error;
+        }
+        else {
+            throw new AppError({
+                description: error.message,
+                httpCode: 500,
+            });
+        }
     }
 }
 
