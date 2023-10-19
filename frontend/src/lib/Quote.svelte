@@ -16,10 +16,9 @@
   div {
         background-color: #fff;
         border-radius: 5px;
-        padding: 20px;
-        margin-bottom: 20px;
+        padding: 10px;
+        margin-bottom: 10px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-        width: 60%;
-        margin: auto;
+        width: 100%;
     }
 </style>
