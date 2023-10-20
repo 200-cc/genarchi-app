@@ -2,11 +2,24 @@
 	import {env} from "$env/dynamic/public";
 	import {onMount} from 'svelte';
 	import Quote from "$lib/Quote.svelte";
+	import NewQuote from "$lib/NewQuote.svelte";
+	import Button, { Label } from "@smui/button";
+	import FormField from "@smui/form-field";
+	import Textfield from '@smui/textfield';
+	import Icon from '@smui/textfield/icon';
+	import HelperText from '@smui/textfield/helper-text';
 
 	let quotes: any[] = [];
 
+	let isNewQuoteDialogOpen = false;
 	export let currentPage = 1;
 	export let itemsPerPage = 5;
+	function openNewQuoteDialog() {
+		isNewQuoteDialogOpen = true;
+	}
+	function closeDialog() {
+		isNewQuoteDialogOpen = false;
+	}
 
 	onMount(async () => {
 		await fetch(`${env.PUBLIC_API_URL}/quote?skip=${(currentPage - 1) * itemsPerPage}&take=${itemsPerPage}`)
@@ -27,13 +40,6 @@
 					quotes = data;
 					console.log(quotes);
 				});
-
-		// for (let i = quotes.length - 1; i >= 0; i--)
-		// 	quotes.pop();
-		// console.log(quotes);
-		// newQuotes.forEach((quote, index) => {
-		// 	myQuotes.push(quote);
-		// });
 	}
 
 	async function changementDePage(page: number) {
@@ -47,15 +53,7 @@
 			if (tmp.length == 0)
 				test = false;
 			else {
-				// for (let i = quotes.length - 1; i >= 0; i--)
-				// 	quotes.pop();
-				// console.log(quotes);
-				// tmp.forEach((quote, index) => {
-				// 	quotes.push(quote);
-				// });
-				console.log(tmp);
 				quotes = tmp;
-				console.log(quotes);
 			}
 		}
 
@@ -66,13 +64,16 @@
 
 <section>
 	<div>
+		<Button class="new-quote" on:click={openNewQuoteDialog} variant="raised">
+			Créer une nouvelle citation
+		</Button>
 		<form on:submit={updateItemsPerPage}>
-			<label for="itemsPerPage">Nombre d'items par page:</label>
-			<input type="number" bind:value={itemsPerPage} id="itemsPerPage" min="1" />
-			<button type="submit">Mettre à jour</button>
+			<Label for="itemsPerPage">Nombre d'items par page:</Label>
+			<Textfield type="number" bind:value={itemsPerPage} id="itemsPerPage" min="1" />
+			<Button type="submit">Mettre à jour</Button>
 		</form>
 	</div>
-	<div>
+	<div class="quotes">
 		{#each quotes as quote (quote.id)}
 			<Quote {quote} />
 		{/each}
@@ -83,6 +84,9 @@
 		{/if}
 		<button on:click={async () => await changementDePage(currentPage + 1)}>Page suivante</button>
 	</div>
+</section>
+<section>
+	<NewQuote bind:isOpen={isNewQuoteDialogOpen} on:close={closeDialog} />
 </section>
 
 <style>
@@ -101,6 +105,10 @@
 		align-items: center;
 		padding: 10px;
 		margin-bottom: 10px;
+	}
+
+	.quotes {
+		width: 100%;
 	}
 
 </style>
