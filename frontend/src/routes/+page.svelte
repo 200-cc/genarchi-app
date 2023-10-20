@@ -62,12 +62,16 @@
 	}
 </script>
 
+<!-- Existing script and styles remain unchanged -->
+
 <section>
-	<div>
-		<Button class="new-quote" on:click={openNewQuoteDialog} variant="raised">
-			Créer une nouvelle citation
-		</Button>
-		<form on:submit={updateItemsPerPage}>
+	<div class="body-header">
+		<div class="left-align">
+			<Button color="secondary" class="new-quote" on:click={openNewQuoteDialog} variant="raised">
+				Créer une nouvelle citation
+			</Button>
+		</div>
+		<form class="center-form" on:submit={updateItemsPerPage}>
 			<Label for="itemsPerPage">Nombre d'items par page:</Label>
 			<Textfield type="number" bind:value={itemsPerPage} id="itemsPerPage" min="1" />
 			<Button type="submit">Mettre à jour</Button>
@@ -111,4 +115,22 @@
 		width: 100%;
 	}
 
+	.body-header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding-left: 5%;
+		margin-left: 5%;
+	}
+
+	.left-align {
+		display: flex;
+		align-items: center;
+	}
+
+	.center-form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
 </style>

@@ -1,6 +1,7 @@
 <script lang="ts">
     import Button from "@smui/button";
     import IconButton, { Icon } from '@smui/icon-button';
+    import {env} from "$env/dynamic/public";
 
     export let quote: any;
 
@@ -10,8 +11,16 @@
 
     let snackbarOpen = false;
 
-    function showSnackbar() {
-        snackbarOpen = true;
+    function deleteQuote() {
+        fetch(`${env.PUBLIC_API_URL}/quote/${quote.id}`, {
+            method: 'DELETE',
+        })
+        .then(() => {
+            window.location.reload();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     }
 </script>
 
@@ -19,6 +28,7 @@
     <div class="text-author">
         <p class="quote-text">"{quoteText}"</p>
         <p class="quote-author">{quoteAuthor}</p>
+        <Button class="delete-button" on:click={deleteQuote} variant="raised">Supprimer</Button>
     </div>
     <div class="quote-likes">
         <p>{quoteLikes}</p>
@@ -35,16 +45,16 @@
     padding: 5px;
     margin-bottom: 5px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    width: 100%;
   }
 
   .text-author {
     padding: 5px;
     margin-bottom: 5px;
-    width: 100%;
+    width: 80%;
     display: flex;
     flex-direction: column;
   }
@@ -70,6 +80,7 @@
     display: flex;
     flex-direction: row;
     letter-spacing: -4px;
+    width: 20%;
   }
 
   .like-button {

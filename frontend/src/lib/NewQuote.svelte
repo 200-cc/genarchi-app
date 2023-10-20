@@ -41,6 +41,7 @@
         <Title>Créer une nouvelle citation</Title>
         <Content>
             <Textfield label="Citation" bind:value={text} required />
+            <br />
             <Textfield label="Auteur" bind:value={author} required />
         </Content>
         <Actions>
@@ -76,11 +77,7 @@
     .dialog {
         display: flex;
         flex-direction: column;
-    }
-
-    .dialog .smui-content {
-        display: flex;
-        flex-direction: column;
-        gap: 10px; /* Add space between Textfields */
+        width: 60%;
+        align-content: flex-start;
     }
 </style>
