@@ -44,8 +44,8 @@ async function getQuotes(skip: number, take: number) {
         });
         if (quotes == null) {
             throw new AppError({
-                httpCode: 404,
-                description: 'Quote not found',
+                httpCode: 500,
+                description: 'Internal error',
             });
         }
         const res =  quotes.map((quote): QuoteEntity => {

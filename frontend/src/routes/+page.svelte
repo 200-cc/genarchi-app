@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { env } from "$env/dynamic/public";
-	import { onMount } from 'svelte';
+	import {env} from "$env/dynamic/public";
+	import {onMount} from 'svelte';
 	import Quote from "$lib/Quote.svelte";
 
 	let quotes: any[] = [];
@@ -9,35 +9,42 @@
 	export let itemsPerPage = 5;
 
 	onMount(async () => {
-		await fetch(`${env.PUBLIC_API_URL}/quote?skip=0&take=${itemsPerPage}`)
-			.then(res => res.json())
-			.then(data => {
-				quotes = data;
-			});
+		await fetch(`${env.PUBLIC_API_URL}/quote?skip=${(currentPage - 1) * itemsPerPage}&take=${itemsPerPage}`)
+				.then(res => res.json())
+				.then(data => {
+					quotes = data;
+				});
 	});
 
 	function updateItemsPerPage(event) {
 		event.preventDefault();
 		currentPage = 1;
-		fetch(`${env.PUBLIC_API_URL}/quote?skip=0&take=${itemsPerPage}`)
-			.then(res => res.json())
-			.then(data => {
-				quotes = data;
-			});
+		fetch(`${env.PUBLIC_API_URL}/quote?skip=${(currentPage - 1) * itemsPerPage}&take=${itemsPerPage}`)
+				.then(res => res.json())
+				.then(data => {
+					quotes = data;
+				});
 	}
 
-	function changementDePage(page: number) {
-		fetch(`${env.PUBLIC_API_URL}/quote?skip=${(page - 1) * itemsPerPage}&take=${itemsPerPage}`)
-			.then(res => res.json())
-			.then(data => {
-				quotes = data;
-			});
+	async function changementDePage(page: number) {
+		let test = true;
 
-		currentPage = page;
+		const res = await fetch(`${env.PUBLIC_API_URL}/quote?skip=${(page - 1) * itemsPerPage}&take=${itemsPerPage}`);
+
+		if (!res.ok)
+			test = false;
+		else {
+			const tmp = await res.json();
+
+			if (tmp.length == 0)
+				test = false;
+			else
+				quotes = tmp;
+		}
+
+		if (test)
+			currentPage = page;
 	}
-
-
-
 </script>
 
 <section>
@@ -55,9 +62,9 @@
 	</div>
 	<div>
 		{#if currentPage > 1}
-			<button on:click={() => changementDePage(currentPage - 1)}>Page précédente</button>
+			<button on:click={async () => await changementDePage(currentPage - 1)}>Page précédente</button>
 		{/if}
-		<button on:click={() => changementDePage(currentPage + 1)}>Page suivante</button>
+		<button on:click={async () => await changementDePage(currentPage + 1)}>Page suivante</button>
 	</div>
 </section>
 
