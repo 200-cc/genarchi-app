@@ -19,27 +19,44 @@
 	function updateItemsPerPage(event) {
 		event.preventDefault();
 		currentPage = 1;
+		let newQuotes: any[] = [];
 		fetch(`${env.PUBLIC_API_URL}/quote?skip=${(currentPage - 1) * itemsPerPage}&take=${itemsPerPage}`)
 				.then(res => res.json())
 				.then(data => {
+					console.log(data);
 					quotes = data;
+					console.log(quotes);
 				});
+
+		// for (let i = quotes.length - 1; i >= 0; i--)
+		// 	quotes.pop();
+		// console.log(quotes);
+		// newQuotes.forEach((quote, index) => {
+		// 	myQuotes.push(quote);
+		// });
 	}
 
 	async function changementDePage(page: number) {
 		let test = true;
-
 		const res = await fetch(`${env.PUBLIC_API_URL}/quote?skip=${(page - 1) * itemsPerPage}&take=${itemsPerPage}`);
 
 		if (!res.ok)
 			test = false;
 		else {
 			const tmp = await res.json();
-
 			if (tmp.length == 0)
 				test = false;
-			else
+			else {
+				// for (let i = quotes.length - 1; i >= 0; i--)
+				// 	quotes.pop();
+				// console.log(quotes);
+				// tmp.forEach((quote, index) => {
+				// 	quotes.push(quote);
+				// });
+				console.log(tmp);
 				quotes = tmp;
+				console.log(quotes);
+			}
 		}
 
 		if (test)
@@ -56,7 +73,7 @@
 		</form>
 	</div>
 	<div>
-		{#each quotes as quote}
+		{#each quotes as quote (quote.id)}
 			<Quote {quote} />
 		{/each}
 	</div>
@@ -78,7 +95,9 @@
 
 	div {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		justify-content: flex-start;
+		flex-wrap: wrap;
 		align-items: center;
 		padding: 10px;
 		margin-bottom: 10px;

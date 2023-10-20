@@ -39,8 +39,8 @@ async function getQuotes(skip: number, take: number) {
             skip,
             take,
             orderBy: {
-                likes: 'desc'
-            }
+                    likes: 'desc'
+                }
         });
         if (quotes == null) {
             throw new AppError({
