@@ -7,7 +7,9 @@
 
     let quoteText = quote.text;
     let quoteAuthor = quote.author;
-    let quoteLikes = quote.likes;
+    // cast quote like as number
+    let quoteLikes = quote.likes as number;
+
 
     let snackbarOpen = false;
 
@@ -17,6 +19,18 @@
         })
         .then(() => {
             window.location.reload();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+    function likeQuote() {
+        fetch(`${env.PUBLIC_API_URL}/quote/${quote.id}/like`, {
+            method: 'POST',
+        })
+        .then(() => {
+            quoteLikes++;
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -32,7 +46,7 @@
     </div>
     <div class="quote-likes">
         <p>{quoteLikes}</p>
-        <button class="like-button">
+        <button class="like-button" on:click={likeQuote}>
             ❤️
         </button>
     </div>

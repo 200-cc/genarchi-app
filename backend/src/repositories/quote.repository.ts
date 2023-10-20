@@ -156,10 +156,37 @@ async function deleteQuote(id: string) {
     }
 }
 
+async function likeQuote(id: string) {
+    logger.debug(`likeQuote: ${id}`)
+    try {
+        const quote = await prisma.quote.update({
+            where: { id },
+            data: {
+                likes: {
+                    increment: 1
+                }
+            }
+        });
+        return new QuoteEntity(
+            quote.id,
+            quote.text,
+            quote.author,
+            quote.likes
+        );
+    } catch (error)
+    {
+        throw new AppError({
+            description: 'Like quote failed',
+            httpCode: 500,
+        });
+    }
+}
+
 export default {
     getQuote,
     getQuotes,
     postQuote,
     patchQuote,
-    deleteQuote
+    deleteQuote,
+    likeQuote
 };

@@ -92,10 +92,26 @@ async function deleteQuote(req: Request, res: Response, next: NextFunction) {
         );
 }
 
+async function likeQuote(req: Request, res: Response, next: NextFunction) {
+    logger.debug(`likeQuote: ${req.params.id}`)
+    const quote: QuoteEntity = await QuoteService.likeQuote(req.params.id);
+    return res
+        .status(200)
+        .json(
+            new QuoteDto(
+                quote.id,
+                quote.text,
+                quote.author,
+                quote.likes
+            )
+        );
+}
+
 export default {
     getQuote,
     getQuotes,
     postQuote,
     patchQuote,
-    deleteQuote
+    deleteQuote,
+    likeQuote
 };

@@ -150,11 +150,34 @@ function deleteQuote(id) {
         }
     });
 }
+function likeQuote(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        logger_middleware_1.logger.debug(`likeQuote: ${id}`);
+        try {
+            const quote = yield prisma.quote.update({
+                where: { id },
+                data: {
+                    likes: {
+                        increment: 1
+                    }
+                }
+            });
+            return new quote_entity_1.default(quote.id, quote.text, quote.author, quote.likes);
+        }
+        catch (error) {
+            throw new app_error_exception_1.AppError({
+                description: 'Like quote failed',
+                httpCode: 500,
+            });
+        }
+    });
+}
 exports.default = {
     getQuote,
     getQuotes,
     postQuote,
     patchQuote,
-    deleteQuote
+    deleteQuote,
+    likeQuote
 };
 //# sourceMappingURL=quote.repository.js.map

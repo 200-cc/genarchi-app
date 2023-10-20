@@ -69,11 +69,21 @@ function deleteQuote(req, res, next) {
         }));
     });
 }
+function likeQuote(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        logger_middleware_1.logger.debug(`likeQuote: ${req.params.id}`);
+        const quote = yield quote_service_1.default.likeQuote(req.params.id);
+        return res
+            .status(200)
+            .json(new quote_dto_1.default(quote.id, quote.text, quote.author, quote.likes));
+    });
+}
 exports.default = {
     getQuote,
     getQuotes,
     postQuote,
     patchQuote,
-    deleteQuote
+    deleteQuote,
+    likeQuote
 };
 //# sourceMappingURL=quote.controller.js.map

@@ -48,11 +48,18 @@ function deleteQuote(id) {
         return yield quote_repository_1.default.deleteQuote(id);
     });
 }
+function likeQuote(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        logger_middleware_1.logger.debug(`likeQuote: ${id}`);
+        return yield quote_repository_1.default.likeQuote(id);
+    });
+}
 exports.default = {
     getQuote,
     getQuotes,
     postQuote,
     patchQuote,
-    deleteQuote
+    deleteQuote,
+    likeQuote
 };
 //# sourceMappingURL=quote.service.js.map

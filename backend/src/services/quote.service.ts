@@ -31,10 +31,16 @@ async function deleteQuote(id: string) {
     return await QuoteRepository.deleteQuote(id);
 }
 
+async function likeQuote(id: string) {
+    logger.debug(`likeQuote: ${id}`)
+    return await QuoteRepository.likeQuote(id);
+}
+
 export default {
     getQuote,
     getQuotes,
     postQuote,
     patchQuote,
-    deleteQuote
+    deleteQuote,
+    likeQuote
 };
