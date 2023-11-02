@@ -1,10 +1,10 @@
 <script lang="ts">
-	import {env} from "$env/dynamic/public";
-	import {onMount} from 'svelte';
-	import Quote from "$lib/Quote.svelte";
-	import NewQuote from "$lib/NewQuote.svelte";
-	import Button, { Label } from "@smui/button";
-	import FormField from "@smui/form-field";
+	import { env } from '$env/dynamic/public';
+	import { onMount } from 'svelte';
+	import Quote from '$lib/Quote.svelte';
+	import NewQuote from '$lib/NewQuote.svelte';
+	import Button, { Label } from '@smui/button';
+	import FormField from '@smui/form-field';
 	import Textfield from '@smui/textfield';
 	import Icon from '@smui/textfield/icon';
 	import HelperText from '@smui/textfield/helper-text';
@@ -22,43 +22,46 @@
 	}
 
 	onMount(async () => {
-		await fetch(`${env.PUBLIC_API_URL}/quote?skip=${(currentPage - 1) * itemsPerPage}&take=${itemsPerPage}`)
-				.then(res => res.json())
-				.then(data => {
-					quotes = data;
-				});
+		await fetch(
+			`${env.PUBLIC_API_URL}/quote?skip=${(currentPage - 1) * itemsPerPage}&take=${itemsPerPage}`
+		)
+			.then((res) => res.json())
+			.then((data) => {
+				quotes = data;
+			});
 	});
 
 	function updateItemsPerPage(event) {
 		event.preventDefault();
 		currentPage = 1;
 		let newQuotes: any[] = [];
-		fetch(`${env.PUBLIC_API_URL}/quote?skip=${(currentPage - 1) * itemsPerPage}&take=${itemsPerPage}`)
-				.then(res => res.json())
-				.then(data => {
-					console.log(data);
-					quotes = data;
-					console.log(quotes);
-				});
+		fetch(
+			`${env.PUBLIC_API_URL}/quote?skip=${(currentPage - 1) * itemsPerPage}&take=${itemsPerPage}`
+		)
+			.then((res) => res.json())
+			.then((data) => {
+				console.log(data);
+				quotes = data;
+				console.log(quotes);
+			});
 	}
 
 	async function changementDePage(page: number) {
 		let test = true;
-		const res = await fetch(`${env.PUBLIC_API_URL}/quote?skip=${(page - 1) * itemsPerPage}&take=${itemsPerPage}`);
+		const res = await fetch(
+			`${env.PUBLIC_API_URL}/quote?skip=${(page - 1) * itemsPerPage}&take=${itemsPerPage}`
+		);
 
-		if (!res.ok)
-			test = false;
+		if (!res.ok) test = false;
 		else {
 			const tmp = await res.json();
-			if (tmp.length == 0)
-				test = false;
+			if (tmp.length == 0) test = false;
 			else {
 				quotes = tmp;
 			}
 		}
 
-		if (test)
-			currentPage = page;
+		if (test) currentPage = page;
 	}
 </script>
 
@@ -84,7 +87,8 @@
 	</div>
 	<div>
 		{#if currentPage > 1}
-			<button on:click={async () => await changementDePage(currentPage - 1)}>Page précédente</button>
+			<button on:click={async () => await changementDePage(currentPage - 1)}>Page précédente</button
+			>
 		{/if}
 		<button on:click={async () => await changementDePage(currentPage + 1)}>Page suivante</button>
 	</div>
