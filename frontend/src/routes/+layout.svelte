@@ -1,7 +1,6 @@
 <script>
 	import Header from '$lib/Header.svelte';
 	import './styles.css';
-	export const prerender = true;
 </script>
 
 <div class="app">
