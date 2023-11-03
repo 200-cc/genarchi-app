@@ -14,9 +14,12 @@ const config = {
 			assets: 'build',
 			fallback: undefined,
 			precompress: false,
-			strict: true
-		})
-	}
+			strict: true,
+		}),
+		version: {
+			name: 'v1.0.0',
+		}
+	},
 };
 
 export default config;
