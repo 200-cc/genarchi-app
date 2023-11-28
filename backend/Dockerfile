@@ -14,4 +14,4 @@ COPY package*.json ./
 RUN npm install --production
 COPY ./prisma/schema.prisma ./prisma/
 RUN npx prisma generate
-CMD ["node", "src/index.js"]
+CMD ["node", "index.js"]
