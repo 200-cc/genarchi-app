@@ -15,12 +15,12 @@
 
 <style>
 	header {
+		align-items: center;
+		background-color: var(--color-theme-1);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 		display: flex;
 		justify-content: space-between;
-		align-items: center;
 		padding: 10px;
-		background-color: #333;
-		color: #fff;
 	}
 
 	.logo-left,
@@ -30,7 +30,7 @@
 
 	.logo-left img,
 	.logo-right img {
-		width: 100px;
-		height: 100px;
+		width: 92px;
+		height: 92px;
 	}
 </style>

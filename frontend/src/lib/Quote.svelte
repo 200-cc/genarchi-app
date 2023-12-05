@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { env } from '$env/dynamic/public';
 	import Button from '@smui/button';
+	import Dialog from '@smui/dialog/src/Dialog.svelte';
+	import FormField from '@smui/form-field/src/FormField.svelte';
 
 	export let quote: any;
 
@@ -65,15 +67,15 @@
 		margin-bottom: 2vh;
 	}
 	.interractions {
-		color: #555;
+		color: var(--color-text);
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
 	}
 
 	.quote-card {
-		background-color: white;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+		background-color: var(--color-bg-00);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 		width: 100%;
 		margin: 0.5rem auto;
 		padding: 0.5rem;
@@ -94,19 +96,20 @@
 		padding-left: 0.5vw;
 		padding-right: 0.5vw;
 		margin-right: 0.5vw;
-		color: #555;
+		color: var(--color-text);
 		font-style: italic;
 		text-align: center;
+		font-size: var(--font-size-5);
 	}
 
 	.quote-sign {
-		color: #555;
-		font-size: 5vh;
+		color: var(--color-theme-1);
+		font-size: var(--font-size-7);
 		font-style: normal;
 	}
 
 	.quote-author {
-		color: #555;
+		color: var(--color-theme-1);
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
