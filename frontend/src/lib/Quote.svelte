@@ -1,12 +1,10 @@
 <script lang="ts">
 	import { env } from '$env/dynamic/public';
-	import Button from '@smui/button';
 	import Dialog from '@smui/dialog/src/Dialog.svelte';
-	import FormField from '@smui/form-field/src/FormField.svelte';
+	import EditQuote from './EditQuote.svelte';
 
 	export let quote: any;
 
-	let quoteText = quote.text;
 	let quoteAuthor = quote.author;
 	// cast quote like as number
 	let quoteLikes = quote.likes as number;
@@ -34,13 +32,21 @@
 				console.error('Error:', error);
 			});
 	}
+
+	let isEditQuoteDialogOpen = false;
+	function openEditQuoteDialog() {
+		isEditQuoteDialogOpen = true;
+	}
+	function closeDialog() {
+		isEditQuoteDialogOpen = false;
+	}
 </script>
 
 <div class="main-card">
 	<div class="grid grid-rows-2 quote-card">
 		<div class="quote-text-main">
 			<p class="quote-sign">"</p>
-			<p class="quote-text">{quoteText}</p>
+			<p class="quote-text">{quote.text}</p>
 			<p class="quote-sign">"</p>
 		</div>
 		<div class="quote-author">~ {quoteAuthor}</div>
@@ -52,6 +58,18 @@
 				<p>{' '}</p>
 				<button on:click={likeQuote}> ❤️ </button>
 			</div>
+		</div>
+		<p>{' · '}</p>
+		<div class="edit-button">
+			<button on:click={openEditQuoteDialog}> 🖋️ </button>
+			<Dialog
+				open={isEditQuoteDialogOpen}
+				scrimClickAction=""
+				aria-labelledby="simple-title"
+				aria-describedby="simple-content"
+			>
+				<EditQuote bind:quote bind:isOpen={isEditQuoteDialogOpen} on:close={closeDialog} />
+			</Dialog>
 		</div>
 		<p>{' · '}</p>
 		<div class="delete-button">

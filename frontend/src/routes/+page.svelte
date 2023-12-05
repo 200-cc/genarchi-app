@@ -37,9 +37,7 @@
 		)
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data);
 				quotes = data;
-				console.log(quotes);
 			});
 	}
 
