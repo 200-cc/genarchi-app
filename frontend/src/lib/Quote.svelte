@@ -1,7 +1,6 @@
 <script lang="ts">
-	import Button from '@smui/button';
-	import IconButton, { Icon } from '@smui/icon-button';
 	import { env } from '$env/dynamic/public';
+	import Button from '@smui/button';
 
 	export let quote: any;
 
@@ -9,8 +8,6 @@
 	let quoteAuthor = quote.author;
 	// cast quote like as number
 	let quoteLikes = quote.likes as number;
-
-	let snackbarOpen = false;
 
 	function deleteQuote() {
 		fetch(`${env.PUBLIC_API_URL}/quote/${quote.id}`, {
@@ -37,69 +34,84 @@
 	}
 </script>
 
-<div class="quote-card">
-	<div class="text-author">
-		<p class="quote-text">"{quoteText}"</p>
-		<p class="quote-author">{quoteAuthor}</p>
-		<Button class="delete-button" on:click={deleteQuote} variant="raised">Supprimer</Button>
+<div class="main-card">
+	<div class="grid grid-rows-2 quote-card">
+		<div class="quote-text-main">
+			<p class="quote-sign">"</p>
+			<p class="quote-text">{quoteText}</p>
+			<p class="quote-sign">"</p>
+		</div>
+		<div class="quote-author">~ {quoteAuthor}</div>
 	</div>
-	<div class="quote-likes">
-		<p>{quoteLikes}</p>
-		<button class="like-button" on:click={likeQuote}> ❤️ </button>
+	<div class="interractions">
+		<div>
+			<div class="flex justify-center items-center">
+				<p>{quoteLikes}</p>
+				<p>{' '}</p>
+				<button on:click={likeQuote}> ❤️ </button>
+			</div>
+		</div>
+		<p>{' · '}</p>
+		<div class="delete-button">
+			<button on:click={deleteQuote}> 🗑️ </button>
+		</div>
 	</div>
 </div>
 
 <style lang="scss">
-	.quote-card {
-		background-color: #fff;
-		border-radius: 5px;
-		padding: 5px;
-		margin-bottom: 5px;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-		display: flex;
-		flex-direction: row;
-		justify-content: flex-start;
+	.main-card {
 		width: 100%;
+		margin-top: 2vh;
+		margin-bottom: 2vh;
+	}
+	.interractions {
+		color: #555;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
 	}
 
-	.text-author {
-		padding: 5px;
-		margin-bottom: 5px;
-		width: 80%;
+	.quote-card {
+		background-color: white;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+		width: 100%;
+		margin: 0.5rem auto;
+		padding: 0.5rem;
+	}
+
+	.quote-text-main {
 		display: flex;
-		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin: 0.1rem;
+		padding: 0.1rem;
+		padding-left: 5vw;
+		padding-right: 5vw;
 	}
 
 	.quote-text {
+		margin-left: 0.5vw;
+		padding-left: 0.5vw;
+		padding-right: 0.5vw;
+		margin-right: 0.5vw;
 		color: #555;
 		font-style: italic;
-		font-size: 20px;
-		width: 100%;
-		margin: 0;
+		text-align: center;
+	}
+
+	.quote-sign {
+		color: #555;
+		font-size: 5vh;
+		font-style: normal;
 	}
 
 	.quote-author {
-		font-size: 20px;
-		width: 100%;
 		color: #555;
-		margin-top: 5px;
-	}
-
-	.quote-likes {
-		justify-content: flex-end;
-		font-size: 40px;
-		font-weight: 600;
 		display: flex;
-		flex-direction: row;
-		letter-spacing: -4px;
-		width: 20%;
-	}
-
-	.like-button {
-		background-color: transparent;
-		cursor: pointer;
-		font-size: 40px;
-		border: none;
-		text-align: center;
+		justify-content: flex-end;
+		align-items: center;
+		margin: 0.1rem;
+		padding: 0.1rem;
+		padding-right: 3vw;
 	}
 </style>
