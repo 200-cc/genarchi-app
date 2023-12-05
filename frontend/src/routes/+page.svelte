@@ -1,13 +1,10 @@
 <script lang="ts">
 	import { env } from '$env/dynamic/public';
 	import { onMount } from 'svelte';
-	import Quote from '$lib/Quote.svelte';
-	import NewQuote from '$lib/NewQuote.svelte';
-	import Button, { Label } from '@smui/button';
 	import FormField from '@smui/form-field';
+	import NewQuote from '$lib/NewQuote.svelte';
+	import Quote from '$lib/Quote.svelte';
 	import Textfield from '@smui/textfield';
-	import Icon from '@smui/textfield/icon';
-	import HelperText from '@smui/textfield/helper-text';
 
 	let quotes: any[] = [];
 
@@ -65,21 +62,13 @@
 	}
 </script>
 
-<!-- Existing script and styles remain unchanged -->
-
 <section>
-	<div class="body-header">
+	<div class="grid grid-cols-2">
 		<div class="left-align">
-			<Button color="secondary" class="new-quote" on:click={openNewQuoteDialog} variant="raised">
-				Créer une nouvelle citation
-			</Button>
+			<button on:click={openNewQuoteDialog}>➕ Nouvelle citation</button>
 		</div>
-		<form class="center-form" on:submit={updateItemsPerPage}>
-			<Label for="itemsPerPage">Nombre d'items par page:</Label>
-			<Textfield type="number" bind:value={itemsPerPage} id="itemsPerPage" min="1" />
-			<Button type="submit">Mettre à jour</Button>
-		</form>
 	</div>
+
 	<div class="quotes">
 		{#each quotes as quote (quote.id)}
 			<Quote {quote} />
@@ -87,11 +76,27 @@
 	</div>
 	<div>
 		{#if currentPage > 1}
-			<button on:click={async () => await changementDePage(currentPage - 1)}>Page précédente</button
+			<button on:click={async () => await changementDePage(currentPage - 1)}
+				>Page précédente ⬅️</button
 			>
 		{/if}
-		<button on:click={async () => await changementDePage(currentPage + 1)}>Page suivante</button>
+		<button on:click={async () => await changementDePage(currentPage + 1)}>➡️ Page suivante</button>
 	</div>
+	<form class="center-form" on:submit={updateItemsPerPage}>
+		<div class="grid grid-rows-2 grid-cols-1">
+			<p>Items par pages</p>
+			<div class="grid grid-cols-2">
+				<div class="col-span-1">
+					<FormField>
+						<Textfield type="number" bind:value={itemsPerPage} id="itemsPerPage" min="1" />
+					</FormField>
+				</div>
+				<div class="col-span-1">
+					<button on:click={async () => await changementDePage(currentPage)}>🔄</button>
+				</div>
+			</div>
+		</div>
+	</form>
 </section>
 <section>
 	<NewQuote bind:isOpen={isNewQuoteDialogOpen} on:close={closeDialog} />
@@ -117,14 +122,6 @@
 
 	.quotes {
 		width: 100%;
-	}
-
-	.body-header {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		padding-left: 5%;
-		margin-left: 5%;
 	}
 
 	.left-align {
